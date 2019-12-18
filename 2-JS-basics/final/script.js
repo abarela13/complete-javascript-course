@@ -1,62 +1,55 @@
-/*****************************
+/* 
  * Variables and data types
  */
-/*
-var firstName = 'John';
+
+/* 
+var firstName, lastName, age, fullName, job, isMarried;
+firstName = 'John';
+lastName = 'Smith';
+age = 28;
+
+fullName = firstName + " " + lastName;
+
 console.log(firstName);
-
-var lastName = 'Smith';
-var age = 28;
-
-var fullAge = true;
-console.log(fullAge);
-
-var job;
+console.log(fullName);
 console.log(job);
 
 job = 'Teacher';
+
 console.log(job);
-
-// Variable naming rules
-var _3years = 3;
-var johnMark = 'John and MArk';
-var if = 23;
-*/
+ */
 
 
-/*****************************
+/* 
  * Variable mutation and type coercion
  */
-/*
-var firstName = 'John';
-var age = 28;
 
+/* 
 // Type coercion
-console.log(firstName + ' ' + age);
+console.log(firstName + " " + age);
 
-var job, isMarried;
 job = 'teacher';
 isMarried = false;
 
-console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);
+console.log(firstName + " is a " + age + " years old " + job + ". You heard that he was married? Well that's " + isMarried + ".");
 
 // Variable mutation
 age = 'twenty eight';
 job = 'driver';
 
-alert(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);
+// Alert window
+alert(firstName + " is a " + age + " years old " + job + ". You heard that he was married? Well that's " + isMarried + ".");
 
-var lastName = prompt('What is his last Name?');
+lastName = prompt('What is his last Name?');
 console.log(firstName + ' ' + lastName);
-*/
+ */
 
 
-
-/*****************************
+/*
  * Basic operators
  */
-/*
-var year, yearJohn, yearMark;
+/* 
+var now, yearJohn, yearMark;
 now = 2018;
 ageJohn = 28;
 ageMark = 33;
@@ -66,31 +59,27 @@ yearJohn = now - ageJohn;
 yeahMark = now - ageMark;
 
 console.log(yearJohn);
-
 console.log(now + 2);
 console.log(now * 2);
 console.log(now / 10);
-
 
 // Logical operators
 var johnOlder = ageJohn < ageMark;
 console.log(johnOlder);
 
-
-// typeof operator
+// typeof operator (returns what type of variable is selected)
 console.log(typeof johnOlder);
 console.log(typeof ageJohn);
-console.log(typeof 'Mark is older tha John');
+console.log(typeof 'Is Mark older than John?');
 var x;
 console.log(typeof x);
-*/
-
-
-
-/*****************************
- * Operator precedence
  */
+
 /*
+ * Operator precedence
+ * https: //developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
+ */
+/* 
 var now = 2018;
 var yearJohn = 1989;
 var fullAge = 18;
@@ -118,54 +107,20 @@ x += 10;
 console.log(x);
 x--;
 console.log(x);
-*/
-
-
-
-/*****************************
- * CODING CHALLENGE 1
  */
 
 /*
-Mark and John are trying to compare their BMI (Body Mass Index), which is calculated using the formula: BMI = mass / height^2 = mass / (height * height). (mass in kg and height in meter).
-
-1. Store Mark's and John's mass and height in variables
-2. Calculate both their BMIs
-3. Create a boolean variable containing information about whether Mark has a higher BMI than John.
-4. Print a string to the console containing the variable from step 3. (Something like "Is Mark's BMI higher than John's? true"). 
-
-GOOD LUCK 😀
-*/
-/*
-var massMark = 78; // kg
-var heightMark = 1.69; // meters
-
-var massJohn = 92;
-var heightJohn = 1.95;
-
-var BMIMark = massMark / (heightMark * heightMark);
-var BMIJohn = massJohn / (heightJohn * heightJohn);
-console.log(BMIMark, BMIJohn);
-
-var markHigherBMI = BMIMark > BMIJohn;
-console.log('Is Mark\'s BMI higher than John\'s? ' + markHigherBMI);
-*/
-
-
-
-/*****************************
  * If / else statements
  */
-/*
+
 var firstName = 'John';
 var civilStatus = 'single';
 
-if (civilStatus === 'married') {
+if (civilStatus.toLowerCase() === 'married') {
     console.log(firstName + ' is married!');
 } else {
     console.log(firstName + ' will hopefully marry soon :)');
 }
-
 
 var isMarried = true;
 if (isMarried) {
@@ -180,22 +135,19 @@ var heightMark = 1.69; // meters
 var massJohn = 92;
 var heightJohn = 1.95;
 
-var BMIMark = massMark / (heightMark * heightMark);
-var BMIJohn = massJohn / (heightJohn * heightJohn);
+var BMIMark = massMark / Math.pow(heightMark, 2);
+var BMIJohn = massJohn / Math.pow(heightJohn, 2);
 
 if (BMIMark > BMIJohn) {
     console.log('Mark\'s BMI is higher than John\'s.');
 } else {
     console.log('John\'s BMI is higher than Marks\'s.');
 }
-*/
 
-
-
-/*****************************
+/*
  * Boolean logic
  */
-/*
+
 var firstName = 'John';
 var age = 20;
 
@@ -208,8 +160,6 @@ if (age < 13) {
 } else {
     console.log(firstName + ' is a man.');
 }
-*/
-
 
 
 /*****************************
