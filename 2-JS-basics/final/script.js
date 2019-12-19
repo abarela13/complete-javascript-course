@@ -335,9 +335,9 @@ console.log(isDesigner);
 /*****************************
  * Objects and properties
  */
-/*
+/* 
 // Object literal
-var john = {
+var person = {
     firstName: 'John',
     lastName: 'Smith',
     birthYear: 1990,
@@ -346,14 +346,14 @@ var john = {
     isMarried: false
 };
 
-console.log(john.firstName);
-console.log(john['lastName']);
+console.log(person.firstName);
+console.log(person['lastName']);
 var x = 'birthYear';
-console.log(john[x]);
+console.log(person[x]);
 
-john.job = 'designer';
-john['isMarried'] = true;
-console.log(john);
+person.job = 'designer';
+person['isMarried'] = true;
+console.log(person);
 
 // new Object syntax
 var jane = new Object();
@@ -361,46 +361,35 @@ jane.firstName = 'Jane';
 jane.birthYear = 1969;
 jane['lastName'] = 'Smith';
 console.log(jane);
-*/
-
-
+ */
 
 /*****************************
  * Objects and methods
  */
-/*
+/* 
+var currentDate = new Date();
+console.log(Date());
+
 var john = {
-    firstName: 'John',
-    lastName: 'Smith',
+    firstName: "John",
+    lastName: "Smith",
     birthYear: 1992,
-    family: ['Jane', 'Mark', 'Bob', 'Emily'],
-    job: 'teacher',
+    family: ["Jane", "Mark", "Bob", "Emily"],
+    job: "teacher",
     isMarried: false,
-    calcAge: function() {
-        this.age = 2018 - this.birthYear;
+    calcAge: function () {
+        this.age = currentDate.getFullYear() - this.birthYear;
     }
 };
 
 john.calcAge();
 console.log(john);
-*/
-
-
-
-/*****************************
- * CODING CHALLENGE 4
  */
 
-/*
-Let's remember the first coding challenge where Mark and John compared their BMIs. Let's now implement the same functionality with objects and methods.
-1. For each of them, create an object with properties for their full name, mass, and height
-2. Then, add a method to each object to calculate the BMI. Save the BMI to the object and also return it from the method.
-3. In the end, log to the console who has the highest BMI, together with the full name and the respective BMI. Don't forget they might have the same BMI.
 
-Remember: BMI = mass / height^2 = mass / (height * height). (mass in kg and height in meter).
 
-GOOD LUCK 😀
-*/
+
+
 /*
 var john = {
     fullName: 'John Smith',
@@ -430,8 +419,6 @@ if (john.calcBMI() > mark.calcBMI()) {
     console.log('They have the same BMI');
 }
 */
-
-
 
 /*****************************
  * Loops and iteration
@@ -481,8 +468,6 @@ for (var i = john.length - 1; i >= 0; i--) {
     console.log(john[i]);
 }
 */
-
-
 
 /*****************************
  * CODING CHALLENGE 5

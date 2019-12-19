@@ -38,7 +38,7 @@ function calculateTotal(subtotal) {
     return subtotal + tipCalculator(subtotal);
 }
 
-for (index = 0; index < bills.length; index++) {
+for (var index = 0; index < bills.length; index++) {
     tips.push(tipCalculator(bills[index]));
     totals.push(calculateTotal(bills[index], tipCalculator(bills[index])));
 }
