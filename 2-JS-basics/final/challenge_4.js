@@ -16,7 +16,7 @@ GOOD LUCK 😀
 function calcBMI(weight, height) {
     return weight / Math.pow(height, 2);
 } */
-var john = {
+var customer = {
     fullName: "John",
     height: 1.95,
     mass: 92,
@@ -48,14 +48,15 @@ function bmiComparison(person1, person2) {
     person2.calcBMI();
 
     if (person1.bmi > person2.bmi) {
-        console.log(person1.fullName + " has a higher BMI of " + person1.bmi)
+        console.log(person1.fullName + " has a higher BMI of " + person1.bmi);
     } else if (person1.bmi < person2.bmi) {
-        console.log(person2.fullName + " has a higher BMI of " + person2.bmi)
+        console.log(person2.fullName + " has a higher BMI of " + person2.bmi);
     } else {
-        console.log("Both people have the same BMI!")
+        console.log("Both people have the same BMI!");
     }
+
+    console.log(person1);
+    console.log(person2);
 }
 
-bmiComparison(john, mark);
-console.log(john);
-console.log(mark);
+bmiComparison(customer, mark);
