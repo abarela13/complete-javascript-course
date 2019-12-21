@@ -71,32 +71,36 @@ function third() {
 }
 */
 
-
-
 /////////////////////////////////////
 // Lecture: The this keyword
 
-/*
 //console.log(this);
-
+/* 
 calculateAge(1985);
 
-function calculateAge(year) {
-    console.log(2016 - year);
-    console.log(this);
-}
+function calculateAge(birthYear) {
+    var currentDate = new Date();
 
+    console.log(currentDate.getFullYear() - birthYear);
+}
+ */
 var john = {
     name: 'John',
     yearOfBirth: 1990,
-    calculateAge: function() {
+    calculateAge: function () {
+        var currentDate = new Date();
+
         console.log(this);
-        console.log(2016 - this.yearOfBirth);
-        
+        console.log(currentDate.getFullYear() - this.yearOfBirth);
+
+        // points to the window object since this is more of a (regular) function declaration rather than a function expression
+        /* 
         function innerFunction() {
             console.log(this);
         }
+
         innerFunction();
+         */
     }
 }
 
@@ -107,7 +111,6 @@ var mike = {
     yearOfBirth: 1984
 };
 
-
+// Method Borrowing
 mike.calculateAge = john.calculateAge;
 mike.calculateAge();
-*/

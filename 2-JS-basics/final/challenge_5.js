@@ -55,7 +55,7 @@ GOOD LUCK 😀
 */
 
 // First Attempt
-/* 
+
 var john = {
     firstName: "John",
     tipperType: 'cheapskate',
@@ -63,27 +63,43 @@ var john = {
     tips: [],
     totals: [],
     calcTips: function () {
-        this.subtotals.forEach(function (i) {
-            john.tips.push(tipCalculator(i));
+        let tipper = this.tipperType;
+        this.subtotals.forEach(function (subtotal) {
+            john.tips.push(tipCalculator(subtotal, tipper));
         });
         this.tipAvg = this.tips.reduce((previous, current) => current + previous) / this.tips.length;
     },
     calcTotals: function () {
+        let tipper = this.tipperType;
         this.subtotals.forEach(function (i) {
-            john.totals.push(i + tipCalculator(i));
+            john.totals.push(i + tipCalculator(i, tipper));
         });
     }
 };
 
-function tipCalculator(subtotal) {
-    var tipPercentage;
+function tipCalculator(subtotal, tipperType) {
+    var tipPercentage = 0;
 
-    if (subtotal < 50) {
-        tipPercentage = 0.2;
-    } else if (subtotal >= 50 && subtotal < 200) {
-        tipPercentage = 0.15;
+    console.log(tipperType);
+
+    if (tipperType === 'cheapskate') {
+        if (subtotal < 50 && subtotal >= 0) {
+            tipPercentage = 0.2;
+        } else if (subtotal >= 50 && subtotal < 200) {
+            tipPercentage = 0.15;
+        } else {
+            tipPercentage = 0.1;
+        }
+    } else if (tipperType === "baller") {
+        if (subtotal < 50) {
+            tipPercentage = 0.2;
+        } else if (subtotal >= 50 && subtotal < 200) {
+            tipPercentage = 0.15;
+        } else {
+            tipPercentage = 0.1;
+        }
     } else {
-        tipPercentage = 0.1;
+        console.log("tipperType was not valid")
     }
     return subtotal * tipPercentage;
 }
@@ -91,20 +107,28 @@ function tipCalculator(subtotal) {
 function processBills(customer) {
     customer.calcTips();
     customer.calcTotals();
-    console.log("Processing " + customer.firstName);
+
+    let {
+        subtotals,
+        tips,
+        totals,
+        firstName,
+        tipAvg
+    } = customer;
+    console.log("Processing " + firstName);
     console.log('\n' + "Subtotals");
-    console.log(customer.subtotals);
+    console.log(subtotals);
     console.log('\n' + "Tips");
-    console.log(customer.tips);
+    console.log(tips);
     console.log('\n' + "Totals");
-    console.log(customer.totals);
+    console.log(totals);
     console.log('\n' + "Average Tip Amount");
-    console.log(customer.tipAvg);
+    console.log(tipAvg);
 }
 
 processBills(john);
- */
 
+/* 
 // Second Attempt
 
 var john = {
@@ -189,7 +213,7 @@ if (john.average > mark.average) {
 } else if (mark.average > john.average) {
     console.log(mark.fullName + '\'s family pays higher tips, with an average of $' + mark.average);
 }
-
+ */
 
 
 /***********************************
