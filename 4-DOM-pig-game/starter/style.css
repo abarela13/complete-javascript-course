@@ -72,8 +72,17 @@ body {
     background-color: #f7f7f7;
 }
 
+.active .player-score {
+    font-weight: 300;
+}
+
 .active .player-name {
     font-weight: 300;
+}
+
+.active .player-current-score {
+    font-weight: 400;
+    font-style: italic;
 }
 
 .active .player-name::after {
@@ -145,8 +154,9 @@ i {
     transition: margin 0.3s;
 }
 
+.btn-start,
 .btn-new {
-    top: 45px;
+    top: 60px;
 }
 
 .btn-roll {

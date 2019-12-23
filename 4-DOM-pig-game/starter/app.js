@@ -8,88 +8,141 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+// Primary Game Variables
+var scores, roundScore, activePlayer, gamePlaying;
 
-var scores, roundScore, activePlayer;
+// DOM Button Elements Getters
+var btnStart = document.querySelector('.btn-start');
+var btnNew = document.querySelector('.btn-new');
+var btnRoll = document.querySelector('.btn-roll');
+var btnHold = document.querySelector('.btn-hold');
 
-scores = [43, 13];
-roundScores = 0;
-activePlayer = 0;
+// Event Listeners
+btnStart.addEventListener('click', newGame);
+btnNew.addEventListener('click', newGame);
+btnRoll.addEventListener('click', rollDice);
+btnHold.addEventListener('click', bankScore);
 
-document.querySelector('.dice').style.display = 'none';
-// document.querySelector('#current-' + activePlayer).innerHTML = '<em><strong>' + dice + '</strong></em>';
+init();
 
-// Score Setter
-document.querySelector('#score-0').textContent = scores[0];
-document.querySelector('#score-1').textContent = scores[1];
+function init() {
+    // Hide Gameplay Buttons
+    btnNew.setAttribute('disabled', true);
+    btnNew.setAttribute('hidden', true);
+    btnRoll.setAttribute('disabled', true);
+    btnRoll.setAttribute('hidden', true);
+    btnHold.setAttribute('disabled', true);
+    btnHold.setAttribute('hidden', true);
 
-// Score Getter
-var x = document.querySelector('#score-0').textContent;
-console.log(x);
+    // Reset Score Values
+    scores = [0, 0];
+    roundScores = 0;
 
-document.querySelector('.dice').style.display = 'none';
+    // Set First Player to Player 1
+    activePlayer = 0;
 
+    // Hide Dice
+    document.querySelector('.dice').style.display = 'none';
 
-document.querySelector('.btn-roll').addEventListener('click', rollDice);
+    // Set all scores values to 0
+    document.getElementById('score-0').textContent = '0';
+    document.getElementById('score-1').textContent = '0';
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+
+    // Begin Game Play
+    gamePlaying = true;
+}
 
 function rollDice() {
-    // Create Variables
-    var diceRolls = 2 + Math.ceil(Math.random() * 3);
+    // DOM Variables
     var diceDOM = document.querySelector('.dice');
-    var currentPlayerScore = document.querySelector('#current-' + activePlayer);
-
-    // Generate Final Random Number
-    var finalRoll = Math.ceil(Math.random() * 6);
 
     // Enable Dice
     diceDOM.style.display = 'block';
 
-    // Dice Animation
-    console.log('Amount of roll animations - ' + diceRolls);
-    for (var i = 0; i < diceRolls; i++) {
-        setInterval(animateDice(), 500);
-    }
+    // Generate Final Random Number
+    var finalRoll = Math.ceil(Math.random() * 6);
 
+    // Animate Dice Rolls
     function animateDice() {
-        var rollValue = Math.ceil(Math.random() * 6);
-        console.log(rollValue);
-        diceDOM.src = 'dice-' + rollValue + '.png';
+        var diceRolls = 4 + Math.ceil(Math.random() * 3);
+        btnRoll.setAttribute('disabled', true);
+        console.log('Amount of roll animations - ' + diceRolls);
+
+        setTimeout(function () {
+            var rollValue = Math.ceil(Math.random() * 6);
+            console.log(rollValue);
+            diceDOM.src = 'dice-' + rollValue + '.png';
+            diceRolls--;
+            if (diceRolls > 0) {
+                animateDice();
+            }
+        }, 750);
+        btnRoll.classList.remove('disabled');
+        showFinalRoll();
     }
 
     // Display Final Result
-    diceDOM.src = 'dice-' + finalRoll + '.png';
-
-    currentPlayerScore.textContent = finalRoll;
-    /* 
-        // Update Round Score IF rolled # was NOT a 1
-        if (finalRoll > 1) {
-            roundScore += finalRoll;
-
-        } */
-
-    /* 
-    
-    console.log(rolls)
-
-    for (var i = 0; i < rolls; i++) {
-        dice = Math.ceil(Math.random() * 6);
+    function showFinalRoll() {
+        diceDOM.src = 'dice-' + finalRoll + '.png';
+        console.log('Final Roll Value - ' + finalRoll);
     }
 
-    dice = Math.ceil(Math.random() * 6);
-
-    dice > 1 ? roundScore += dice : console.log('Dice rolled a ' + dice + '. Switching Players.');
-    switchPlayer();
-     */
-}
-
-function switchPlayer() {
-    dice === 0 ? activePlayer = 1 : activePlayer = 0;
-}
-
-
-function gameHold() {
-
+    // Update Round Score IF rolled # was NOT a 1
+    if (finalRoll > 1) {
+        console.log('Player ' + (activePlayer + 1) + ' rolled a ' + finalRoll + '.');
+        roundScore += finalRoll;
+        document.getElementById('current-' + activePlayer).textContent = roundScore;
+    } else {
+        document.getElementById('current-' + activePlayer).textContent = 0;
+        roundScore = 0;
+        console.log('Player ' + activePlayer + ' rolled a 1.');
+        console.log('Switching Players.');
+        switchPlayer();
+    }
 }
 
 function newGame() {
+    // Hide Gameplay Buttons
+    btnStart.setAttribute('disabled', true);
+    btnStart.setAttribute('hidden', true);
 
+    // Show Gameplay Buttons
+    btnNew.removeAttribute('disabled');
+    btnNew.removeAttribute('hidden');
+
+    btnRoll.removeAttribute('disabled');
+    btnRoll.removeAttribute('hidden');
+
+    btnHold.removeAttribute('disabled');
+    btnHold.removeAttribute('hidden');
+}
+
+
+function bankScore() {
+    document.getElementById('current-' + activePlayer).textContent = 0;
+    scores[activePlayer] += roundScore;
+    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+    switchPlayer();
+}
+
+function switchPlayer() {
+    if (activePlayer === 0) {
+        document.querySelector('.player-0-panel').classList.remove('active');
+        document.querySelector('.player-1-panel').classList.add('active');
+        activePlayer = 1;
+        console.log('Player ' + (activePlayer + 1) + ' round.');
+    } else {
+        document.querySelector('.player-0-panel').classList.add('active');
+        document.querySelector('.player-1-panel').classList.remove('active');
+        activePlayer = 0;
+        console.log('Player ' + (activePlayer + 1) + ' round.');
+    }
+}
+
+function gameLog() {
+    console.log('Current Active Player - ' + (activePlayer + 1));
+    console.log('Last Roll - ' + finalRoll);
+    console.log('Current Round Score - ' + roundScore);
 }
