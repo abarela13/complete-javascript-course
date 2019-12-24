@@ -9,140 +9,208 @@ GAME RULES:
 
 */
 // Primary Game Variables
-var scores, roundScore, activePlayer, gamePlaying;
+var scores, roundScore, activePlayer;
+
+// Dice Values
+var diceValue, diceRolls;
 
 // DOM Button Elements Getters
-var btnStart = document.querySelector('.btn-start');
-var btnNew = document.querySelector('.btn-new');
-var btnRoll = document.querySelector('.btn-roll');
-var btnHold = document.querySelector('.btn-hold');
+var btnStart = document.querySelector(".btn-start");
+var btnNew = document.querySelector(".btn-new");
+var btnRoll = document.querySelector(".btn-roll");
+var btnHold = document.querySelector(".btn-hold");
 
-// Event Listeners
-btnStart.addEventListener('click', newGame);
-btnNew.addEventListener('click', newGame);
-btnRoll.addEventListener('click', rollDice);
-btnHold.addEventListener('click', bankScore);
+// Button Event Listeners
+// newGame is example of Callback Function, function called on by another function
+btnStart.addEventListener("click", newGame);
+btnNew.addEventListener("click", newGame);
+btnRoll.addEventListener("click", rollDice);
+btnHold.addEventListener("click", bankScore);
 
 init();
 
 function init() {
-    // Hide Gameplay Buttons
-    btnNew.setAttribute('disabled', true);
-    btnNew.setAttribute('hidden', true);
-    btnRoll.setAttribute('disabled', true);
-    btnRoll.setAttribute('hidden', true);
-    btnHold.setAttribute('disabled', true);
-    btnHold.setAttribute('hidden', true);
+	// Reset Score Values
+	scores = [0, 0];
+	roundScore = 0;
 
-    // Reset Score Values
-    scores = [0, 0];
-    roundScores = 0;
+	// Set First Player to Player 1
+	activePlayer = 0;
 
-    // Set First Player to Player 1
-    activePlayer = 0;
+	// Set Player Names
+	document.getElementById("name-0").textContent = "Player 1";
+	document.getElementById("name-1").textContent = "Player 2";
 
-    // Hide Dice
-    document.querySelector('.dice').style.display = 'none';
+	// Reset player panel classes
+	document.querySelector(".player-1-panel").classList.remove("winner");
+	document.querySelector(".player-0-panel").classList.remove("winner");
+	document.querySelector(".player-1-panel").classList.remove("active");
+	document.querySelector(".player-0-panel").classList.add("active");
 
-    // Set all scores values to 0
-    document.getElementById('score-0').textContent = '0';
-    document.getElementById('score-1').textContent = '0';
-    document.getElementById('current-0').textContent = '0';
-    document.getElementById('current-1').textContent = '0';
+	// Show Start Game Button
+	btnStart.removeAttribute("disabled");
+	btnStart.removeAttribute("hidden");
 
-    // Begin Game Play
-    gamePlaying = true;
+	// Hide Gameplay Buttons
+	btnNew.setAttribute("disabled", true);
+	btnNew.setAttribute("hidden", true);
+	btnRoll.setAttribute("disabled", true);
+	btnRoll.setAttribute("hidden", true);
+	btnHold.setAttribute("disabled", true);
+	btnHold.setAttribute("hidden", true);
+
+	// Hide Dice
+	document.querySelector(".dice").style.display = "none";
+
+	// Set all scores values to 0
+	document.getElementById("score-0").textContent = "0";
+	document.getElementById("score-1").textContent = "0";
+	document.getElementById("current-0").textContent = "0";
+	document.getElementById("current-1").textContent = "0";
 }
 
 function rollDice() {
-    // DOM Variables
-    var diceDOM = document.querySelector('.dice');
+	// Toggle Roll Dice Button OFF
+	btnRoll.setAttribute("disabled", true);
+	btnRoll.setAttribute("hidden", true);
 
-    // Enable Dice
-    diceDOM.style.display = 'block';
+	// DOM Variables
+	var diceDOM = document.querySelector(".dice");
 
-    // Generate Final Random Number
-    var finalRoll = Math.ceil(Math.random() * 6);
+	// Enable Dice
+	diceDOM.style.display = "block";
+	/* 
+	// Update and animate Dice Roll
+	function animateDice() {
+		// Number of times to animate dice
+		diceRolls = 3 + Math.ceil(Math.random() * 3);
+		console.log("Amount of roll animations - " + (diceRolls + 1));
 
-    // Animate Dice Rolls
-    function animateDice() {
-        var diceRolls = 4 + Math.ceil(Math.random() * 3);
-        btnRoll.setAttribute('disabled', true);
-        console.log('Amount of roll animations - ' + diceRolls);
+		for (var diceRoll = 0; diceRoll < diceRolls; diceRoll++) {
+			var randomPips = Math.ceil(Math.random() * 6);
 
-        setTimeout(function () {
-            var rollValue = Math.ceil(Math.random() * 6);
-            console.log(rollValue);
-            diceDOM.src = 'dice-' + rollValue + '.png';
-            diceRolls--;
-            if (diceRolls > 0) {
-                animateDice();
-            }
-        }, 750);
-        btnRoll.classList.remove('disabled');
-        showFinalRoll();
-    }
+			setTimeout(function() {
+				// Pip Value Per Roll
+				diceDOM.src = "dice-" + randomPips + ".png";
+				console.log("Roll " + diceRoll + ",  " + randomPips + " pips.");
+			}, 750 * diceRoll);
+		}
 
-    // Display Final Result
-    function showFinalRoll() {
-        diceDOM.src = 'dice-' + finalRoll + '.png';
-        console.log('Final Roll Value - ' + finalRoll);
-    }
+		setTimeout(function() {
+			finalRoll();
+		}, 750 * (diceRolls + 1));
+	}
+ */
+	// Display Final Result
+	function finalRoll() {
+		diceValue = Math.ceil(Math.random() * 6);
+		diceDOM.src = "dice-" + diceValue + ".png";
 
-    // Update Round Score IF rolled # was NOT a 1
-    if (finalRoll > 1) {
-        console.log('Player ' + (activePlayer + 1) + ' rolled a ' + finalRoll + '.');
-        roundScore += finalRoll;
-        document.getElementById('current-' + activePlayer).textContent = roundScore;
-    } else {
-        document.getElementById('current-' + activePlayer).textContent = 0;
-        roundScore = 0;
-        console.log('Player ' + activePlayer + ' rolled a 1.');
-        console.log('Switching Players.');
-        switchPlayer();
-    }
+		// Update Round Score IF rolled # was NOT a 1
+		if (diceValue !== 1) {
+			// Add dice value to round score
+			roundScore += diceValue;
+			console.log("Player " + (activePlayer + 1) + " rolled a " + diceValue + ". Round total so far - " + roundScore + ".");
+			document.getElementById("current-" + activePlayer).textContent = roundScore;
+		} else {
+			document.getElementById("current-" + activePlayer).textContent = 0;
+			console.log("BAD LUCK!!!. Player " + (activePlayer + 1) + " rolled a 1 and lost out on " + roundScore + " points.");
+			roundScore = 0;
+			switchPlayer();
+		}
+	}
+
+	finalRoll();
+
+	// Toggle Roll Dice Button ON
+	btnRoll.removeAttribute("disabled");
+	btnRoll.removeAttribute("hidden");
 }
 
 function newGame() {
-    // Hide Gameplay Buttons
-    btnStart.setAttribute('disabled', true);
-    btnStart.setAttribute('hidden', true);
+	init();
 
-    // Show Gameplay Buttons
-    btnNew.removeAttribute('disabled');
-    btnNew.removeAttribute('hidden');
+	// Hide Start Game Button
+	btnStart.setAttribute("disabled", true);
+	btnStart.setAttribute("hidden", true);
 
-    btnRoll.removeAttribute('disabled');
-    btnRoll.removeAttribute('hidden');
+	// Enable Gameplay Buttons
+	btnNew.removeAttribute("disabled");
+	btnNew.removeAttribute("hidden");
+	btnRoll.removeAttribute("disabled");
+	btnRoll.removeAttribute("hidden");
+	btnHold.removeAttribute("disabled");
+	btnHold.removeAttribute("hidden");
 
-    btnHold.removeAttribute('disabled');
-    btnHold.removeAttribute('hidden');
+	// Begin Game Play
+	gamePlaying = true;
+	console.log("---------- Player " + (activePlayer + 1) + " ----------");
 }
 
-
 function bankScore() {
-    document.getElementById('current-' + activePlayer).textContent = 0;
-    scores[activePlayer] += roundScore;
-    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
-    switchPlayer();
+	// Bank CURRENT scort to Global Scores
+	scores[activePlayer] += roundScore;
+
+	// Update UI
+	document.getElementById("current-" + activePlayer).textContent = 0;
+	document.getElementById("score-" + activePlayer).textContent = scores[activePlayer];
+
+	roundScore = 0;
+
+	// Check if player won
+	if (scores[activePlayer] >= 30) {
+		gameWin();
+	} else {
+		switchPlayer();
+	}
 }
 
 function switchPlayer() {
-    if (activePlayer === 0) {
-        document.querySelector('.player-0-panel').classList.remove('active');
-        document.querySelector('.player-1-panel').classList.add('active');
-        activePlayer = 1;
-        console.log('Player ' + (activePlayer + 1) + ' round.');
-    } else {
-        document.querySelector('.player-0-panel').classList.add('active');
-        document.querySelector('.player-1-panel').classList.remove('active');
-        activePlayer = 0;
-        console.log('Player ' + (activePlayer + 1) + ' round.');
-    }
+	activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+	console.log("\n");
+	console.log("---------- Player " + (activePlayer + 1) + " ----------");
+
+	document.querySelector(".player-0-panel").classList.toggle("active");
+	document.querySelector(".player-1-panel").classList.toggle("active");
 }
 
 function gameLog() {
-    console.log('Current Active Player - ' + (activePlayer + 1));
-    console.log('Last Roll - ' + finalRoll);
-    console.log('Current Round Score - ' + roundScore);
+	console.log("Current Active Player - " + (activePlayer + 1));
+	console.log("Last Roll - " + finalRoll);
+	console.log("Current Round Score - " + roundScore);
+}
+
+function gameWin() {
+	// DOM active player panel
+	var activePlayerPanel = document.querySelector(".player-" + activePlayer + "-panel");
+
+	// Update Winning Player UI
+	activePlayerPanel.classList.remove("active");
+	activePlayerPanel.classList.add("winner");
+
+	// Hide Gameplay Buttons
+	btnRoll.toggleAttribute("disabled");
+	btnRoll.toggleAttribute("hidden");
+	btnHold.toggleAttribute("disabled");
+	btnHold.toggleAttribute("hidden");
+
+	// Hide Dice
+	document.querySelector(".dice").style.display = "none";
+
+	// Update Player Name to "Winner"
+	document.getElementById("name-" + activePlayer).textContent = "WINNER";
+	/* 
+	setTimeout(function() {
+		var rematch = confirm("Would you like to play another game?");
+
+		console.log("Congratulations player " + (activePlayer + 1) + " you won!");
+
+		if (rematch == true) {
+			newGame();
+		} else {
+			init();
+		}
+    }, 10);
+     */
 }
