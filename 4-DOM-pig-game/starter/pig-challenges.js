@@ -108,7 +108,8 @@ function rollDice() {
 		diceDOM1.src = "dice-" + diceValue1 + ".png";
 		diceDOM2.src = "dice-" + diceValue2 + ".png";
 
-		if (lastRoll === 6 & diceValue1 === 6) { // Bankrupt player if they roll two 6s
+		if ((lastRoll === 6) & (diceValue1 === 6)) {
+			// Bankrupt player if they roll two 6s
 			// Zero out active player scores
 			roundScore = 0;
 			scores[activePlayer] = 0;

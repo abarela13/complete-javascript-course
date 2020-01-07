@@ -1,27 +1,26 @@
-/////////////////////////////
-// Lecture: Function constructor
 /*
-var john = {
-    name: 'John',
-    yearOfBirth: 1990,
-    job: 'teacher'
-};
+ Function constructor creates functions which execute in the global scope only
+ Creates Person Prototype
+ Function Constructs
+ */
 
+/* 
 var Person = function(name, yearOfBirth, job) {
-    this.name = name;
-    this.yearOfBirth = yearOfBirth;
-    this.job = job;
-}
-
-Person.prototype.calculateAge  = function() {
-    console.log(2016 - this.yearOfBirth);
+	this.name = name;
+	this.yearOfBirth = yearOfBirth;
+	this.job = job;
 };
 
-Person.prototype.lastName = 'Smith';
+Person.prototype.calculateAge = function() {
+	console.log(2018 - this.yearOfBirth);
+};
 
-var john = new Person('John', 1990, 'teacher');
-var jane = new Person('Jane', 1969, 'designer');
-var mark = new Person('Mark', 1948, 'retired');
+Person.prototype.lastName = "Smith";
+
+var john = new Person("John", 1990, "teacher");
+var jane = new Person("Jane", 1969, "designer");
+var mark = new Person("Mark", 1948, "retired");
+var mark = new Person("Mark", 1948, "retired");
 
 john.calculateAge();
 jane.calculateAge();
@@ -30,36 +29,47 @@ mark.calculateAge();
 console.log(john.lastName);
 console.log(jane.lastName);
 console.log(mark.lastName);
+console.log("John has own property of 'job'? " + john.hasOwnProperty("job"));
+console.log("John has own property of 'lastName'? " + john.hasOwnProperty("lastName"));
+console.log("lastName is a prototype property for the Peron Object Constructor.");
 */
 
+// Inspect Console Requests
+// john.__proto__ === Person.prototype;
+// john instance of Person;
 
-
-/////////////////////////////
-// Lecture: Object.create
-/*
+/* 
+ Object.create
+ Allows for easy way to directly specificy which object should be a prototype
+ */
+/* 
 var personProto = {
-    calculateAge: function() {
-        console.log(2016 - this.yearOfBirth);
-    }
+	calculateAge: function() {
+		console.log(2018 - this.yearOfBirth);
+	}
 };
 
-var john = Object.create(personProto);
-john.name = 'John';
-john.yearOfBirth = 1990;
-john.job = 'teacher';
+var luke = Object.create(personProto);
+luke.name = "Luke";
+luke.yearOfBirth = 1990;
+luke.job = "teacher";
 
-var jane = Object.create(personProto, {
-    name: { value: 'Jane' },
-    yearOfBirth: { value: 1969 },
-    job: { value: 'designer' }
+var jenny = Object.create(personProto, {
+	name: {
+		value: "Jenny"
+	},
+	yearOfBirth: {
+		value: 1969
+	},
+	job: {
+		value: "designer"
+	}
 });
-*/
-
-
-
-/////////////////////////////
-// Lecture: Primitives vs objects
-/*
+ */
+/* 
+ Primitives vs objects
+ */
+/* 
 // Primitives
 var a = 23;
 var b = a;
@@ -67,12 +77,11 @@ a = 46;
 console.log(a);
 console.log(b);
 
-
-
 // Objects
+console.log("// Objects");
 var obj1 = {
-    name: 'John',
-    age: 26
+	name: "John",
+	age: 26
 };
 var obj2 = obj1;
 obj1.age = 30;
@@ -82,62 +91,66 @@ console.log(obj2.age);
 // Functions
 var age = 27;
 var obj = {
-    name: 'Jonas',
-    city: 'Lisbon'
+	name: "Jonas",
+	city: "Lisbon"
 };
 
-function change(a, b) {
-    a = 30;
-    b.city = 'San Francisco';
+console.log("// Change Function");
+
+function change(c, d) {
+	d.city = "San Francisco";
+	c = 30;
+	console.log("This is a copy of what got passed in a c, and has its own value - ", c);
+	console.log("Age - ", age);
+	console.log("This is passing the reference to the object and is able to be edited since being pointed to the reference at - (obj.city)", obj.city);
 }
 
 change(age, obj);
-
-console.log(age);
-console.log(obj.city);
-*/
-
-
-
+ */
 /////////////////////////////
-// Lecture: Passing functions as arguments
-/*
+// Passing functions as arguments
+
 var years = [1990, 1965, 1937, 2005, 1998];
 
-function arrayCalc(arr, fn) {
-    var arrRes = [];
-    for (var i = 0; i < arr.length; i++) {
-        arrRes.push(fn(arr[i]));
-    }
-    return arrRes;
+function arrayCalculation(arr, fn) {
+	var arrayResult = [];
+	for (var i = 0; i < arr.length; i++) {
+		arrayResult.push(fn(arr[i])); // Push into arrayResult the callback function result
+	}
+	return arrayResult;
 }
 
-function calculateAge(el) {
-    return 2016 - el;
+function calculateAge(arrayElement) {
+	return new Date().getFullYear() - arrayElement; // Substracts array date vs current year
 }
 
-function isFullAge(el) {
-    return el >= 18;
+function isAdult(arrayElement) {
+	return arrayElement >= 18; // Returns true of false
 }
 
-function maxHeartRate(el) {
-    if (el >= 18 && el <= 81) {
-        return Math.round(206.9 - (0.67 * el));
-    } else {
-        return -1;
-    }
+function maxHeartRate(arrayElement) {
+	if (arrayElement >= 18 && arrayElement <= 81) {
+		return Math.round(206.9 - 0.67 * arrayElement);
+	} else {
+		return -1;
+	}
 }
 
+// Allows callback functions to be called when variable are "called" upon later and not execute immediately.
+var ages = arrayCalculation(years, calculateAge);
+var fullAges = arrayCalculation(ages, isAdult);
+var rates = arrayCalculation(ages, maxHeartRate);
 
-var ages = arrayCalc(years, calculateAge);
-var fullAges = arrayCalc(ages, isFullAge);
-var rates = arrayCalc(ages, maxHeartRate);
-
+// When calling upon these variables the callback functions are being executed at this time.
+console.log("Ages");
+console.log(years);
 console.log(ages);
+console.log("Adults?");
+console.log(years);
+console.log(fullAges);
+console.log("Max Heart Rates by Ages");
+console.log(years);
 console.log(rates);
-*/
-
-
 
 /////////////////////////////
 // Lecture: Functions returning functions
@@ -171,8 +184,6 @@ designerQuestion('Mike');
 interviewQuestion('teacher')('Mark');
 */
 
-
-
 /////////////////////////////
 // Lecture: IIFE
 /*
@@ -197,15 +208,13 @@ game();
 })(5);
 */
 
-
-
 /////////////////////////////
 // Lecture: Closures
 /*
 function retirement(retirementAge) {
     var a = ' years left until retirement.';
     return function(yearOfBirth) {
-        var age = 2016 - yearOfBirth;
+        var age = 2018 - yearOfBirth;
         console.log((retirementAge - age) + a);
     }
 }
@@ -235,8 +244,6 @@ function interviewQuestion(job) {
 
 interviewQuestion('teacher')('John');
 */
-
-
 
 /////////////////////////////
 // Lecture: Bind, call and apply
@@ -287,7 +294,7 @@ function arrayCalc(arr, fn) {
 }
 
 function calculateAge(el) {
-    return 2016 - el;
+    return 2018 - el;
 }
 
 function isFullAge(limit, el) {
@@ -300,12 +307,8 @@ console.log(ages);
 console.log(fullJapan);
 */
 
-
-
-
 /////////////////////////////
 // CODING CHALLENGE
-
 
 /*
 --- Let's build a fun quiz game in the console! ---
@@ -327,7 +330,6 @@ c) correct answer (I would use a number for this)
 
 7. Suppose this code would be a plugin for other programmers to use in their code. So make sure that all your code is private and doesn't interfere with the other programmers code (Hint: we learned a special technique to do exactly that).
 */
-
 
 /*
 (function() {
@@ -378,8 +380,6 @@ c) correct answer (I would use a number for this)
 })();
 */
 
-
-
 /*
 --- Expert level ---
 
@@ -391,7 +391,6 @@ c) correct answer (I would use a number for this)
 
 11. Display the score in the console. Use yet another method for this.
 */
-
 
 /*
 (function() {
