@@ -154,7 +154,7 @@ console.log(rates);
  */
 /////////////////////////////
 // Lecture: Functions returning functions
-
+/* 
 function interviewQuestion(job) {
 	if (job === "designer") {
 		// Anonymous functions (no name)
@@ -183,31 +183,42 @@ designerQuestion("Mike");
 
 // Returns function then calls that function with second argument
 interviewQuestion("teacher")("Mark");
-
+ */
 /////////////////////////////
-// Lecture: IIFE
-/*
+// Lecture: IIFE (Immediately invoked function expressions)
+/* 
 function game() {
-    var score = Math.random() * 10;
-    console.log(score >= 5);
+	var score = Math.random() * 10;
+	console.log(score >= 5);
 }
+
 game();
+ */
 
-
-(function () {
-    var score = Math.random() * 10;
-    console.log(score >= 5);
+// Expression, anything inside of () cannot be a statement
+// Additionally creates data privacy
+/* 
+(function() {
+	var score = Math.random() * 10;
+	console.log(score >= 5);
 })();
-
+ */
 //console.log(score);
 
-
-(function (goodLuck) {
-    var score = Math.random() * 10;
-    console.log(score >= 5 - goodLuck);
-})(5);
+// Invalid Declartion (no name)
+/*
+function () {
+	var score = Math.random() * 10;
+	console.log(score >= 5);
+}
 */
-
+/* 
+// Hidden from outside scope
+(function(goodLuck) {
+	var score = Math.random() * 10;
+	console.log(score >= 5 - goodLuck);
+})(5);
+ */
 /////////////////////////////
 // Lecture: Closures
 /*
