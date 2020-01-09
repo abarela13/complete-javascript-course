@@ -225,7 +225,7 @@ function () {
  An innner function always has access to the variables and parameters of the its outer "parent" function,
  even after the outer function has returned.
  */
-
+/* 
 function retirement(retirementAge) {
 	var a = " years left until retirement.";
 
@@ -258,68 +258,71 @@ function interviewQuestion(job) {
 }
 
 interviewQuestion("teacher")("John");
-
+ */
 /////////////////////////////
 // Lecture: Bind, call and apply
-/*
+
 var john = {
-    name: 'John',
-    age: 26,
-    job: 'teacher',
-    presentation: function(style, timeOfDay) {
-        if (style === 'formal') {
-            console.log('Good ' + timeOfDay + ', Ladies and gentlemen! I\'m ' +  this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old.');
-        } else if (style === 'friendly') {
-            console.log('Hey! What\'s up? I\'m ' +  this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice ' + timeOfDay + '.');
-        }
-    }
+	name: "John",
+	age: 26,
+	job: "teacher",
+	introduction: function(style, timeOfDay) {
+		if (style === "formal") {
+			console.log("Good " + timeOfDay + ", Ladies and gentlemen! I'm " + this.name + ", I'm a " + this.job + " and I'm " + this.age + " years old.");
+		} else if (style === "friendly") {
+			console.log("Hey! What's up? I'm " + this.name + ", I'm a " + this.job + " and I'm " + this.age + " years old. Have a great " + timeOfDay + ".");
+		}
+	}
 };
+
+john.introduction("formal", "morning");
 
 var emily = {
-    name: 'Emily',
-    age: 35,
-    job: 'designer'
+	name: "Emily",
+	age: 35,
+	job: "designer"
 };
 
-john.presentation('formal', 'morning');
+// Method borrowing
+// First argument has to be set to the "this" variable, in this case emily.
+john.introduction.call(emily, "friendly", "afternoon");
 
-john.presentation.call(emily, 'friendly', 'afternoon');
-
+// Arguments are passed in as an array
 //john.presentation.apply(emily, ['friendly', 'afternoon']);
 
-var johnFriendly = john.presentation.bind(john, 'friendly');
+// Currying
+// Creates function based on another fucntion with preset arguments. Not immediately called, instead generates copy of function.
+var johnFriendly = john.introduction.bind(john, "friendly");
 
-johnFriendly('morning');
-johnFriendly('night');
+johnFriendly("morning");
+johnFriendly("night");
 
-var emilyFormal = john.presentation.bind(emily, 'formal');
-emilyFormal('afternoon');
-
+var emilyFormal = john.introduction.bind(emily, "formal");
+emilyFormal("afternoon");
 
 // Another cool example
 var years = [1990, 1965, 1937, 2005, 1998];
 
 function arrayCalc(arr, fn) {
-    var arrRes = [];
-    for (var i = 0; i < arr.length; i++) {
-        arrRes.push(fn(arr[i]));
-    }
-    return arrRes;
+	var arrayResult = [];
+	for (var i = 0; i < arr.length; i++) {
+		arrayResult.push(fn(arr[i]));
+	}
+	return arrayResult;
 }
 
-function calculateAge(el) {
-    return 2018 - el;
+function calculateAge(arrayElement) {
+	return new Date().getFullYear() - arrayElement;
 }
 
-function isFullAge(limit, el) {
-    return el >= limit;
+function isAdult(limit, arrayElement) {
+	return arrayElement >= limit;
 }
 
 var ages = arrayCalc(years, calculateAge);
-var fullJapan = arrayCalc(ages, isFullAge.bind(this, 20));
+var isAdultJapan = arrayCalc(ages, isAdult.bind(this, 20));
 console.log(ages);
-console.log(fullJapan);
-*/
+console.log(isAdultJapan);
 
 /////////////////////////////
 // CODING CHALLENGE
