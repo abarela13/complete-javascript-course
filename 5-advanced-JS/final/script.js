@@ -261,7 +261,7 @@ interviewQuestion("teacher")("John");
  */
 /////////////////////////////
 // Lecture: Bind, call and apply
-
+/* 
 var john = {
 	name: "John",
 	age: 26,
@@ -291,7 +291,7 @@ john.introduction.call(emily, "friendly", "afternoon");
 //john.presentation.apply(emily, ['friendly', 'afternoon']);
 
 // Currying
-// Creates function based on another fucntion with preset arguments. Not immediately called, instead generates copy of function.
+// Creates function based on another function with preset arguments. Not immediately called, instead generates copy of function.
 var johnFriendly = john.introduction.bind(john, "friendly");
 
 johnFriendly("morning");
@@ -323,7 +323,7 @@ var ages = arrayCalc(years, calculateAge);
 var isAdultJapan = arrayCalc(ages, isAdult.bind(this, 20));
 console.log(ages);
 console.log(isAdultJapan);
-
+ */
 /////////////////////////////
 // CODING CHALLENGE
 
@@ -348,55 +348,70 @@ c) correct answer (I would use a number for this)
 7. Suppose this code would be a plugin for other programmers to use in their code. So make sure that all your code is private and doesn't interfere with the other programmers code (Hint: we learned a special technique to do exactly that).
 */
 
-/*
-(function() {
-    function Question(question, answers, correct) {
-        this.question = question;
-        this.answers = answers;
-        this.correct = correct;
-    }
+(function () {
+	var score = 0;
+	var q;
 
-    Question.prototype.displayQuestion = function() {
-        console.log(this.question);
+	function Question(question, answers, correct) {
+		this.question = question;
+		this.answers = answers;
+		this.correct = correct;
+	}
 
-        for (var i = 0; i < this.answers.length; i++) {
-            console.log(i + ': ' + this.answers[i]);
-        }
-    }
+	var q1 = new Question("Question 1:", ["Correct", "Incorrect"], 0);
+	var q2 = new Question("Question 2:", ["Incorrect", "Incorrect", "Correct"], 2);
+	var q3 = new Question("Question 3:", ["Incorrect", "Correct", "Incorrect", "Incorrect"], 1);
 
-    Question.prototype.checkAnswer = function(ans) {
-        if (ans === this.correct) {
-            console.log('Correct answer!');
+	var questions = [q1, q2, q3];
 
-        } else {
-            console.log('Wrong answer. Try again :)')
-        }
-    }
+	Question.prototype.displayQuestion = function () {
+		console.log(this.question);
 
-    var q1 = new Question('Is JavaScript the coolest programming language in the world?',
-                          ['Yes', 'No'],
-                          0);
+		for (var i = 0; i < this.answers.length; i++) {
+			console.log(i + 1 + ": " + this.answers[i]);
+		}
+	};
 
-    var q2 = new Question('What is the name of this course\'s teacher?',
-                          ['John', 'Micheal', 'Jonas'],
-                          2);
+	Question.prototype.checkAnswer = function (answer) {
+		if (answer.toLowerCase() === "exit") {
+			console.log("Thank for playing! Your final score was - " + score);
+			document.getElementById("final-score").textContent = "Final Score - " + score;
+		} else if (parseInt(answer) === this.correct + 1) {
+			score += 1;
 
-    var q3 = new Question('What does best describe coding?',
-                          ['Boring', 'Hard', 'Fun', 'Tediuos'],
-                          2);
+			console.clear();
+			console.log("\nCorrect answer!\n");
 
-    var questions = [q1, q2, q3];
+			newQuestions();
+			askQuestion();
+		} else if (isNaN(answer) || answer == "") {
+			console.clear();
+			console.log("\nInvalid Entry. Try again.\n");
 
-    var n = Math.floor(Math.random() * questions.length);
+			askQuestion();
+		} else {
+			console.clear();
+			console.log("Wrong Answer. Try Again.");
 
-    questions[n].displayQuestion();
+			askQuestion();
+		}
+	};
 
-    var answer = parseInt(prompt('Please select the correct answer.'));
+	function newQuestion() {
+		return (q = Math.floor(Math.random() * questions.length));
+	}
 
-    questions[n].checkAnswer(answer);
+	function askQuestion() {
+		questions[q].displayQuestion();
+
+		var answer = prompt("Select answer. Type 'exit' to exit game.");
+
+		questions[q].checkAnswer(answer);
+	}
+
+	// newQuestion();
+	// askQuestion();
 })();
-*/
-
 /*
 --- Expert level ---
 
@@ -408,7 +423,6 @@ c) correct answer (I would use a number for this)
 
 11. Display the score in the console. Use yet another method for this.
 */
-
 /*
 (function() {
     function Question(question, answers, correct) {
