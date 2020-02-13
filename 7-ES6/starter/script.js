@@ -416,7 +416,7 @@ console.log(steph);
 
 //////////////////////////////
 // Lecture: Maps
-
+/* 
 const question = new Map();
 question.set("question", "What is the official name of the latest major JavaScript Version?");
 question.set(1, "ES5");
@@ -458,3 +458,41 @@ for (let [key, value] of question.entries()) {
 
 const answerPrompt = parseInt(prompt("Write the correct answer"));
 console.log(question.get(answerPrompt === question.get("correct")));
+ */
+//////////////////////////////
+// Lecture: Classes
+
+// ES5
+var Person5 = function (name, yearOfBirth, job) {
+	this.name = name;
+	this.yearOfBirth = yearOfBirth;
+	this.job = job;
+}
+
+Person5.prototype.calcAge = function () {
+	var age = new Date().getFullYear() - this.yearOfBirth;
+	console.log(age);
+}
+
+var john5 = new Person5("John", 1990, "teacher");
+
+// ES6
+class Person6 {
+	constructor(name, yearOfBirth, job) {
+		this.name = name;
+		this.yearOfBirth = yearOfBirth;
+		this.job = job;
+	}
+
+	calcAge() {
+		var age = new Date().getFullYear() - this.yearOfBirth;
+		console.log(age);
+	}
+
+	static greeting() {
+		console.log("Hey there");
+	}
+}
+
+const jake6 = new Person6("Jake", 1987, "teacher");
+Person6.greeting();
