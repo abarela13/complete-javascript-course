@@ -325,13 +325,13 @@ const marriageSmithMiller = [...familyMiller, ...familySmith];
 console.log(familySmith);
 console.log(familyMiller);
 console.log(marriageSmithMiller);
+*/
 
 const h = document.querySelector("h1");
 const boxes = document.querySelectorAll(".box");
 const allElements = [h, ...boxes];
 
 Array.from(allElements).forEach(cur => (cur.style.color = "white"));
- */
 
 //////////////////////////////
 // Lecture: Rest Parameters
@@ -357,7 +357,7 @@ function isFullAge6(...yearsOfBirth) {
 
 isFullAge6(1990, 1999, 1965, 2016, 1987);
  */
-
+/* 
 // ES5
 function isFullAge5(limit) {
 	var argsArr = Array.prototype.slice.call(arguments, 1);
@@ -412,3 +412,49 @@ console.log(jake);
 
 var steph = new SmithPerson("Steph", 1992);
 console.log(steph);
+ */
+
+//////////////////////////////
+// Lecture: Maps
+
+const question = new Map();
+question.set("question", "What is the official name of the latest major JavaScript Version?");
+question.set(1, "ES5");
+question.set(2, "ES6");
+question.set(3, "ES7");
+question.set(4, "ES2015");
+question.set(5, "ES2017");
+question.set("correct", 3);
+question.set(true, "Correct");
+question.set(false, "Incorrect, Try Again");
+
+console.log(`Map Data Structure "question" size - ${question.size}`);
+console.log(question.get("question"));
+
+console.log(`Deleting key element "4" - ${question.get(4)}`);
+question.delete(4);
+console.log(`Map Data Structure "question" size - ${question.size}`);
+
+if (question.has(5)) {
+	console.log(`Key element "5" present`);
+	console.log(`Deleting key element "5" - ${question.get(5)}`);
+	question.delete(5);
+	console.log(`Map Data Structure "question" size - ${question.size}`);
+}
+
+// question.clear();
+// console.log(`Map Data Structure "question" cleared.`);
+// console.log(`Map Data Structure "question" size - ${question.size}`);
+
+console.log("\n");
+
+// question.forEach((value, key) => console.log(`This is ${key}, and it's set to ${value}`));
+
+for (let [key, value] of question.entries()) {
+	if (typeof key === "number") {
+		console.log(`Key ${key}: ${value}`);
+	}
+}
+
+const answerPrompt = parseInt(prompt("Write the correct answer"));
+console.log(question.get(answerPrompt === question.get("correct")));
