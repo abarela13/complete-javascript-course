@@ -301,8 +301,8 @@ console.log(ages.find(cur => cur >= 18));
  */
 
 //////////////////////////////
-// Lecture: Arrays
-
+// Lecture: Arrays - Spread Operator
+/* 
 function addFourAges(a, b, c, d) {
 	return a + b + c + d;
 }
@@ -331,3 +331,84 @@ const boxes = document.querySelectorAll(".box");
 const allElements = [h, ...boxes];
 
 Array.from(allElements).forEach(cur => (cur.style.color = "white"));
+ */
+
+//////////////////////////////
+// Lecture: Rest Parameters
+/* 
+// ES5
+function isFullAge5() {
+	// console.log(arguments);
+	var argsArr = Array.prototype.slice.call(arguments);
+	argsArr.forEach(function (cur) {
+		console.log(new Date().getFullYear() - cur >= 18);
+	});
+}
+
+// isFullAge5(1990, 1999, 1965); // Arguments(3) [1990, 1999, 1965]
+// isFullAge5(1990, 1999, 1965, 2016, 1987);
+
+// ES6
+function isFullAge6(...yearsOfBirth) {
+	yearsOfBirth.forEach(element => {
+		console.log(new Date().getFullYear() - element >= 18);
+	});
+}
+
+isFullAge6(1990, 1999, 1965, 2016, 1987);
+ */
+
+// ES5
+function isFullAge5(limit) {
+	var argsArr = Array.prototype.slice.call(arguments, 1);
+
+	argsArr.forEach(function(cur) {
+		console.log(new Date().getFullYear() - cur >= limit);
+	});
+}
+
+// isFullAge5(28, 1990, 1999, 1965);
+
+// ES6
+function isFullAge6(limit, ...yearsOfBirth) {
+	yearsOfBirth.forEach(element => {
+		console.log(new Date().getFullYear() - element >= limit);
+	});
+}
+
+isFullAge6(21, 1990, 1999, 1965, 2016, 1987);
+
+//////////////////////////////
+// Lecture: Default Parameters
+
+// ES5
+function SmithPerson(firstName, yearOfBirth, lastName, nationality) {
+	lastName === undefined ? (lastName = "Smith") : lastName;
+	yearOfBirth === undefined ? (yearOfBirth = 1990) : yearOfBirth;
+	nationality === undefined ? (nationality = "American") : nationality;
+
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.yearOfBirth = yearOfBirth;
+	this.nationality = nationality;
+}
+
+var john = new SmithPerson("John", 1990);
+console.log(john);
+
+var emily = new SmithPerson("Emily", 1983, "Diaz", "Spanish");
+console.log(emily);
+
+// ES6
+function SmithPerson(firstName, yearOfBirth = 1900, lastName = "Smith", nationality = "American") {
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.yearOfBirth = yearOfBirth;
+	this.nationality = nationality;
+}
+
+var jake = new SmithPerson("Jake", 1991);
+console.log(jake);
+
+var steph = new SmithPerson("Steph", 1992);
+console.log(steph);
