@@ -461,7 +461,7 @@ console.log(question.get(answerPrompt === question.get("correct")));
  */
 //////////////////////////////
 // Lecture: Classes
-
+/* 
 // ES5
 var Person5 = function (name, yearOfBirth, job) {
 	this.name = name;
@@ -496,3 +496,67 @@ class Person6 {
 
 const jake6 = new Person6("Jake", 1987, "teacher");
 Person6.greeting();
+ */
+//////////////////////////////
+// Lecture: Classes with Subclasses
+
+// ES5
+var Person5 = function (name, yearOfBirth, job) {
+	this.name = name;
+	this.yearOfBirth = yearOfBirth;
+	this.job = job;
+	this.age = new Date().getFullYear() - this.yearOfBirth;
+}
+
+Person5.prototype.calcAge = function () {
+	var age = new Date().getFullYear() - this.yearOfBirth;
+	console.log(age);
+}
+
+var Athlete5 = function (name, yearOfBirth, job, competitions, medals) {
+	Person5.call(this, name, yearOfBirth, job);
+	this.competitions = competitions;
+	this.medals = medals;
+}
+
+Athlete5.prototype = Object.create(Person5.prototype);
+
+Athlete5.prototype.wonMedal = function () {
+	this.medals++;
+	console.log(this.medals);
+}
+
+var johnAthlete5 = new Athlete5("John", 1988, "swimmer", 10, 3);
+
+console.log(johnAthlete5);
+
+// ES6
+class Person6 {
+	constructor(name, yearOfBirth, job) {
+		this.name = name;
+		this.yearOfBirth = yearOfBirth;
+		this.job = job;
+	}
+
+	calcAge() {
+		var age = new Date().getFullYear() - this.yearOfBirth;
+		console.log(age);
+	}
+}
+
+class Athlete6 extends Person6 {
+	constructor(name, yearOfBirth, job, competitions, medals) {
+		super(name, yearOfBirth, job);
+		this.age = new Date().getFullYear() - this.yearOfBirth;
+		this.competitions = competitions;
+		this.medals = medals;
+	}
+
+	wonMedal() {
+		this.medals++;
+		console.log(this.medals);
+	}
+}
+
+const jakeAthlete6 = new Athlete6("Jake", 1987, "shotput", 5, 2);
+console.log(jakeAthlete6);
