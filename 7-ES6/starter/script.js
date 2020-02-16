@@ -499,7 +499,7 @@ Person6.greeting();
  */
 //////////////////////////////
 // Lecture: Classes with Subclasses
-
+/* 
 // ES5
 var Person5 = function (name, yearOfBirth, job) {
 	this.name = name;
@@ -560,3 +560,4 @@ class Athlete6 extends Person6 {
 
 const jakeAthlete6 = new Athlete6("Jake", 1987, "shotput", 5, 2);
 console.log(jakeAthlete6);
+ */
