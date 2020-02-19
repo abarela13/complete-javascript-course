@@ -52,7 +52,7 @@ getRecipe();
  */
 //////////////////////////////
 // Lecture: Promises
-
+/* 
 // Produce Promises
 const getIDs = new Promise((resolve, reject) => {
 	setTimeout(() => {
@@ -124,3 +124,64 @@ async function getRecipesAW() {
 	return recipe;
 }
 getRecipesAW().then(result => console.log(`${result} is the best ever!`));
+ */
+//////////////////////////////
+// Lecture: AJAX/API
+
+function getWeather(woeid) {
+	fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${woeid}/`)
+		.then(result => {
+			// console.log("--- Result ---");
+			// console.log(result);
+			return result.json();
+		})
+		.then(data => {
+			// console.log("--- Data ---");
+			// console.log(data);
+
+			const today = data.consolidated_weather[0];
+			const todayMin = ((today.min_temp * 9) / 5 + 32).toFixed(1);
+			const todayMax = ((today.max_temp * 9) / 5 + 32).toFixed(1);
+
+			const currentTemp = ((today.the_temp * 9) / 5 + 32).toFixed(1);
+			const currentWeather = today.weather_state_name;
+
+			console.log(`Today in ${data.title} it is currently ${currentTemp}°F with ${currentWeather} weather. Temperatures will be between ${todayMin}°F and ${todayMax}°F.`);
+		})
+		.catch(error => console.log(error));
+}
+getWeather(2487956);
+
+async function getWeatherAW(woeid) {
+	try {
+		const result = await fetch(`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${woeid}/`);
+		const data = await result.json();
+
+		const today = data.consolidated_weather[0];
+		const todayMin = ((today.min_temp * 9) / 5 + 32).toFixed(1);
+		const todayMax = ((today.max_temp * 9) / 5 + 32).toFixed(1);
+
+		const currentTemp = ((today.the_temp * 9) / 5 + 32).toFixed(1);
+		const currentWeather = today.weather_state_name;
+
+		const tomorrow = data.consolidated_weather[1];
+		const tomorrowMin = ((tomorrow.min_temp * 9) / 5 + 32).toFixed(1);
+		const tomorrowMax = ((tomorrow.max_temp * 9) / 5 + 32).toFixed(1);
+
+		console.log("\n");
+		console.log(`Today in ${data.title} it is currently ${currentTemp}°F with ${currentWeather} weather. Temperatures will be between ${todayMin}°F and ${todayMax}°F.`);
+		console.log(`Tomorrow temperatures will be between ${tomorrowMin}°F and ${tomorrowMax}°F.`);
+
+		return data;
+	} catch (error) {
+		alert(error);
+	}
+}
+getWeatherAW(2487956);
+
+let dataLondon;
+
+getWeatherAW(44418).then(data => {
+	dataLondon = data;
+	console.log(dataLondon);
+});
