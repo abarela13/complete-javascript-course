@@ -93,19 +93,34 @@ const getRelated = publisher => {
 };
 
 // Consume Promises
-getIDs
-	.then(IDs => {
-		console.log(IDs);
-		return getRecipe(IDs[2]);
-	})
-	.then(recipe => {
-		console.log(recipe);
-		return getRelated("Jonas");
-	})
-	.then(recipe => {
-		console.log(recipe);
-	})
-	.catch(error => {
-		console.log("---Error---");
-		console.log(error);
-	});
+// getIDs
+// 	.then(IDs => {
+// 		console.log(IDs);
+// 		return getRecipe(IDs[2]);
+// 	})
+// 	.then(recipe => {
+// 		console.log(recipe);
+// 		return getRelated("Jonas");
+// 	})
+// 	.then(recipe => {
+// 		console.log(recipe);
+// 	})
+// 	.catch(error => {
+// 		console.log("---Error---");
+// 		console.log(error);
+// 	});
+
+//////////////////////////////
+// Lecture: Async/Await
+
+async function getRecipesAW() {
+	const IDs = await getIDs;
+	console.log(IDs);
+	const recipe = await getRecipe(IDs[2]);
+	console.log(recipe);
+	const related = await getRelated("Jonas");
+	console.log(related);
+
+	return recipe;
+}
+getRecipesAW().then(result => console.log(`${result} is the best ever!`));
