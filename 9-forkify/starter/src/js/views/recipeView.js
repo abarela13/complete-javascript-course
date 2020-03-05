@@ -1,29 +1,33 @@
-import { elements } from "./base";
+import {
+    elements
+} from "./base";
 
-import { Fraction } from "fractional";
+import {
+    Fraction
+} from "fractional";
 
 export const clearRecipe = () => {
-	elements.recipe.innerHTML = "";
+    elements.recipe.innerHTML = "";
 };
 
 const formatCount = count => {
-	if (count) {
-		const [int, dec] = count
-			.toString()
-			.split(".")
-			.map(el => parseInt(el, 10));
+    if (count) {
+        const [int, dec] = count
+            .toString()
+            .split(".")
+            .map(el => parseInt(el, 10));
 
-		if (!dec) return count;
+        if (!dec) return count;
 
-		if (int === 0) {
-			const fr = new Fraction(count);
-			return `${fr.numerator}/${fr.denominator}`;
-		} else {
-			const fr = new Fraction(count - int);
-			return `${int} ${fr.numerator}/${fr.denominator}`;
-		}
-	}
-	return "?";
+        if (int === 0) {
+            const fr = new Fraction(count);
+            return `${fr.numerator}/${fr.denominator}`;
+        } else {
+            const fr = new Fraction(count - int);
+            return `${int} ${fr.numerator}/${fr.denominator}`;
+        }
+    }
+    return "?";
 };
 
 export const createIngredient = ingredient => `
@@ -39,7 +43,7 @@ export const createIngredient = ingredient => `
     </li>`;
 
 export const renderRecipe = recipe => {
-	const markup = `
+    const markup = `
         <figure class="recipe__fig">
             <img src="${recipe.img}" alt="${recipe.title}" class="recipe__img">
             <h1 class="recipe__title">
@@ -87,7 +91,7 @@ export const renderRecipe = recipe => {
                 ${recipe.ingredients.map(el => createIngredient(el)).join(" ")}
             </ul>
 
-            <button class="btn-small recipe__btn">
+            <button class="btn-small recipe__btn recipe__btn--add">
                 <svg class="search__icon">
                     <use href="img/icons.svg#icon-shopping-cart"></use>
                 </svg>
@@ -109,17 +113,17 @@ export const renderRecipe = recipe => {
             </a>
         </div>`;
 
-	elements.recipe.insertAdjacentHTML("afterbegin", markup);
+    elements.recipe.insertAdjacentHTML("afterbegin", markup);
 };
 
 export const updateServingsIngredients = recipe => {
-	// Update servings
-	document.querySelector(".recipe__info-data--people").textContent = recipe.servings;
+    // Update servings
+    document.querySelector(".recipe__info-data--people").textContent = recipe.servings;
 
-	// Update ingredients
-	const countElements = Array.from(document.querySelectorAll(".recipe__count"));
+    // Update ingredients
+    const countElements = Array.from(document.querySelectorAll(".recipe__count"));
 
-	countElements.forEach((el, i) => {
-		el.textContent = formatCount(recipe.ingredients[i].count);
-	});
+    countElements.forEach((el, i) => {
+        el.textContent = formatCount(recipe.ingredients[i].count);
+    });
 };

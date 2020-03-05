@@ -1,5 +1,8 @@
 import axios from "axios";
-import { key, proxy } from "../config";
+import {
+	key,
+	proxy
+} from "../config";
 
 export default class Recipe {
 	constructor(id) {
@@ -44,9 +47,7 @@ export default class Recipe {
 			});
 
 			// Remove white space in front of ingredients
-			console.log(ingredient);
 			ingredient = ingredient.trim();
-			console.log(ingredient);
 
 			// Remove Parenthesis and values between
 			ingredient = ingredient.replace(/ *\([^)]*\) */g, " ");
@@ -83,7 +84,7 @@ export default class Recipe {
 					unit: arrIng[unitIndex],
 					ingredient: arrIng.slice(unitIndex + 1).join(" ")
 				};
-				console.log(`There is a valid unit ${objIng.unit}`);
+				// console.log(`There is a valid unit ${objIng.unit}`);
 			} else if (parseInt(arrIng[0], 10)) {
 				// There is NO unit, but first element is a number
 				objIng = {
@@ -91,7 +92,7 @@ export default class Recipe {
 					unit: "",
 					ingredient: arrIng.slice(1).join(" ")
 				};
-				console.log(`There is NO unit but first value is number ${objIng.count}, ${objIng.count}`);
+				// console.log(`There is NO unit but first value is number ${arrIng[0]}`);
 			} else if (unitIndex === -1) {
 				// There is NO unit and NO number in first position
 				objIng = {
@@ -99,7 +100,7 @@ export default class Recipe {
 					unit: "",
 					ingredient
 				};
-				console.log(`There is NO unit and NO number in first position ${objIng.ingredient}`);
+				// console.log(`There is NO unit and NO number in first position ${objIng.ingredient}`);
 			}
 
 			return objIng;

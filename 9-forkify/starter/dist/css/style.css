@@ -609,7 +609,8 @@ body {
 .shopping__list {
   list-style: none;
   max-height: 77rem;
-  overflow: scroll;
+  /* overflow: scroll; */
+  overflow: hidden;
 }
 
 .shopping__item {
