@@ -277,6 +277,7 @@ body {
   align-items: center;
   height: 100%;
   transition: all .3s;
+  visibility: hidden;
 }
 
 .likes__field:hover {
